@@ -1,10 +1,9 @@
 package com.demo.employees;
 
+import com.demo.employees.integration.BaseIntegrationTest;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class EmployeesApplicationTests {
+class EmployeesApplicationTests extends BaseIntegrationTest {
 
     @Test
     void contextLoads() {
