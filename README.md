@@ -234,18 +234,17 @@ For the full set of endpoint examples, see the [Postman Collection](#postman-col
 ├── pom.xml                             # Maven project configuration
 ├── README.md                           # This file
 ├── documents/
-│   ├── ExamDescription.md              # Original exam requirements
-│   ├── Observations.md                 # Architecture & design decisions
-│   └── ScreenshotChecklist.md          # Screenshot checklist
+│   └──  ExamDescription.md              # Original exam requirements
 ├── docs/
 │   ├── postman/                        # Postman collection & environment
 │   └── screenshots/                    # Proof of functionality screenshots
 ├── .github/
 │   └── workflows/
-│       └── ci.yml                      # GitHub Actions CI/CD pipeline
+│       ├── ci.yml                      # GitHub Actions CI/CD pipeline
+│       └── cd.yml                      # GitHub Actions CI/CD pipeline
 └── src/
     ├── main/
-    │   ├── java/com/example/employees/
+    │   ├── java/com/demo/employees/
     │   │   ├── EmployeesApplication.java   # Main application class
     │   │   ├── common/                     # Constants, utility classes
     │   │   ├── config/                     # Security, Swagger, WebMvc, Interceptor
@@ -267,7 +266,7 @@ For the full set of endpoint examples, see the [Postman Collection](#postman-col
     │       ├── application-test.yml        # Test profile (Testcontainers)
     │       └── application-prod.yml        # Production profile
     └── test/
-        └── java/com/example/employees/
+        └── java/com/demo/employees/
             ├── controller/                 # Controller unit tests (MockMvc)
             ├── exception/                  # Exception handler unit tests
             ├── integration/                # Integration tests (Testcontainers)
@@ -286,9 +285,9 @@ The application follows a classic **layered architecture** within a single deplo
 
 Cross-cutting concerns are handled by:
 - **Spring Security** — HTTP Basic Auth with role-based access control
-- **Global Exception Handler** — Unified `ApiResponse` error formatting via `@ControllerAdvice`
+- **Global Exception Handler** — Unified `ApiResp` error formatting via `@ControllerAdvice`
 - **Request Logging Interceptor** — Logs HTTP method, URI, and headers (excluding Authorization)
-- **Bean Validation** — Input validation with custom annotations (`@ValidDateOfBirth`)
+- **Bean Validation** — Input validation with custom annotations (`@ValidDOB`)
 
 Key design decisions include:
 - **UUID** identifiers for security and microservices readiness
@@ -297,7 +296,6 @@ Key design decisions include:
 - **Testcontainers** with real MySQL instead of H2 for test fidelity
 - **Configurable parameters** in `application.yml` (minimum age, search length, name regex)
 
-For a detailed discussion of all design decisions and observations, see [`documents/Observations.md`](documents/Observations.md).
 
 ## Proof of Functionality
 
@@ -329,13 +327,3 @@ A ready-to-use Postman collection is provided in the [`docs/postman/`](docs/post
 4. Select the **"Employee Service - Local"** environment from the environment dropdown (top-right)
 5. Replace `<EMPLOYEE_UUID>` placeholders with actual UUIDs from POST/GET responses
 
-### Collection Structure
-
-The collection is organized into the following folders:
-
-- **CRUD Operations** — Create (single & batch), list, get by ID, full update, partial update, soft-delete
-- **Search** — Search by name, search including deleted records
-- **Pagination** — Page/size parameters, sorting, paginated search
-- **Security** — ADMIN access, USER read-only, USER forbidden on write, unauthenticated request
-- **Validation Errors** — Missing fields, invalid date of birth, search term too short
-- **Health & Info** — Actuator health check, application version

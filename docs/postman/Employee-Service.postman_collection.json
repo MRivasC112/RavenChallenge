@@ -1,0 +1,522 @@
+{
+  "info": {
+    "_postman_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+    "name": "Employee Service API",
+    "description": "Complete Postman collection for the Employee Service REST API. Covers CRUD operations, search, pagination, security, validation, and health endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "CRUD Operations",
+      "item": [
+        {
+          "name": "POST - Create Single Employee",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{admin_username}}" },
+                { "key": "password", "value": "{{admin_password}}" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"firstName\": \"María\",\n    \"middleName\": \"José\",\n    \"fatherName\": \"García\",\n    \"motherName\": \"López\",\n    \"dateOfBirth\": \"15-03-1990\",\n    \"gender\": \"FEMALE\",\n    \"position\": \"Software Engineer\"\n  }\n]"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees"]
+            }
+          }
+        },
+        {
+          "name": "POST - Create Multiple Employees (Batch)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{admin_username}}" },
+                { "key": "password", "value": "{{admin_password}}" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"firstName\": \"Carlos\",\n    \"middleName\": null,\n    \"fatherName\": \"Hernández\",\n    \"motherName\": \"Martínez\",\n    \"dateOfBirth\": \"22-07-1985\",\n    \"gender\": \"MALE\",\n    \"position\": \"Project Manager\"\n  },\n  {\n    \"firstName\": \"Ana\",\n    \"middleName\": \"Lucía\",\n    \"fatherName\": \"Rodríguez\",\n    \"motherName\": \"Sánchez\",\n    \"dateOfBirth\": \"10-11-1992\",\n    \"gender\": \"FEMALE\",\n    \"position\": \"QA Analyst\"\n  }\n]"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees"]
+            }
+          }
+        },
+        {
+          "name": "GET - List All Employees",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{admin_username}}" },
+                { "key": "password", "value": "{{admin_password}}" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees"]
+            }
+          }
+        },
+        {
+          "name": "GET - List All Employees (Include Deleted)",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{admin_username}}" },
+                { "key": "password", "value": "{{admin_password}}" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees?deleted=true",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees"],
+              "query": [
+                { "key": "deleted", "value": "true" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET - Get Employee by ID",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{admin_username}}" },
+                { "key": "password", "value": "{{admin_password}}" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees/<EMPLOYEE_UUID>",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees", "<EMPLOYEE_UUID>"]
+            }
+          }
+        },
+        {
+          "name": "GET - Get Employee by ID (Include Deleted)",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{admin_username}}" },
+                { "key": "password", "value": "{{admin_password}}" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees/<EMPLOYEE_UUID>?deleted=true",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees", "<EMPLOYEE_UUID>"],
+              "query": [
+                { "key": "deleted", "value": "true" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT - Full Update Employee",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{admin_username}}" },
+                { "key": "password", "value": "{{admin_password}}" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"María\",\n  \"middleName\": \"Isabel\",\n  \"fatherName\": \"García\",\n  \"motherName\": \"López\",\n  \"dateOfBirth\": \"15-03-1990\",\n  \"gender\": \"FEMALE\",\n  \"position\": \"Senior Software Engineer\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees/<EMPLOYEE_UUID>",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees", "<EMPLOYEE_UUID>"]
+            }
+          }
+        },
+        {
+          "name": "PATCH - Partial Update Employee",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{admin_username}}" },
+                { "key": "password", "value": "{{admin_password}}" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"position\": \"Tech Lead\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees/<EMPLOYEE_UUID>",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees", "<EMPLOYEE_UUID>"]
+            }
+          }
+        },
+        {
+          "name": "DELETE - Soft Delete Employee",
+          "request": {
+            "method": "DELETE",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{admin_username}}" },
+                { "key": "password", "value": "{{admin_password}}" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees/<EMPLOYEE_UUID>",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees", "<EMPLOYEE_UUID>"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "item": [
+        {
+          "name": "GET - Search by Name",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{admin_username}}" },
+                { "key": "password", "value": "{{admin_password}}" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees/search?name=García",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees", "search"],
+              "query": [
+                { "key": "name", "value": "García" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET - Search by Name (Include Deleted)",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{admin_username}}" },
+                { "key": "password", "value": "{{admin_password}}" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees/search?name=García&deleted=true",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees", "search"],
+              "query": [
+                { "key": "name", "value": "García" },
+                { "key": "deleted", "value": "true" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pagination",
+      "item": [
+        {
+          "name": "GET - List Employees (Page 0, Size 5)",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{admin_username}}" },
+                { "key": "password", "value": "{{admin_password}}" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees?page=0&size=5",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees"],
+              "query": [
+                { "key": "page", "value": "0" },
+                { "key": "size", "value": "5" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET - List Employees (Sorted by Last Name ASC)",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{admin_username}}" },
+                { "key": "password", "value": "{{admin_password}}" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees?page=0&size=10&sort=fatherName,asc",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees"],
+              "query": [
+                { "key": "page", "value": "0" },
+                { "key": "size", "value": "10" },
+                { "key": "sort", "value": "fatherName,asc" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET - Search with Pagination",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{admin_username}}" },
+                { "key": "password", "value": "{{admin_password}}" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees/search?name=García&page=0&size=5&sort=firstName,asc",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees", "search"],
+              "query": [
+                { "key": "name", "value": "García" },
+                { "key": "page", "value": "0" },
+                { "key": "size", "value": "5" },
+                { "key": "sort", "value": "firstName,asc" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Security",
+      "item": [
+        {
+          "name": "GET - ADMIN Access (List Employees)",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{admin_username}}" },
+                { "key": "password", "value": "{{admin_password}}" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees"]
+            }
+          }
+        },
+        {
+          "name": "GET - USER Read-Only Access (List Employees)",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{user_username}}" },
+                { "key": "password", "value": "{{user_password}}" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees"]
+            }
+          }
+        },
+        {
+          "name": "POST - USER Forbidden on Write (Expect 403)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{user_username}}" },
+                { "key": "password", "value": "{{user_password}}" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"firstName\": \"Test\",\n    \"fatherName\": \"User\",\n    \"motherName\": \"Forbidden\",\n    \"dateOfBirth\": \"01-01-2000\",\n    \"gender\": \"MALE\",\n    \"position\": \"Tester\"\n  }\n]"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees"]
+            }
+          }
+        },
+        {
+          "name": "GET - Unauthenticated Request (Expect 401)",
+          "request": {
+            "method": "GET",
+            "auth": { "type": "noauth" },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Validation Errors",
+      "item": [
+        {
+          "name": "POST - Missing Required Fields (Expect 400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{admin_username}}" },
+                { "key": "password", "value": "{{admin_password}}" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"firstName\": \"\",\n    \"fatherName\": \"\",\n    \"motherName\": \"\",\n    \"dateOfBirth\": \"\",\n    \"position\": \"\"\n  }\n]"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees"]
+            }
+          }
+        },
+        {
+          "name": "POST - Invalid Date of Birth / Under 18 (Expect 400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{admin_username}}" },
+                { "key": "password", "value": "{{admin_password}}" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"firstName\": \"Young\",\n    \"fatherName\": \"Employee\",\n    \"motherName\": \"Test\",\n    \"dateOfBirth\": \"01-01-2015\",\n    \"gender\": \"MALE\",\n    \"position\": \"Intern\"\n  }\n]"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees"]
+            }
+          }
+        },
+        {
+          "name": "GET - Search Term Too Short (Expect 400)",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{admin_username}}" },
+                { "key": "password", "value": "{{admin_password}}" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employees/search?name=ab",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employees", "search"],
+              "query": [
+                { "key": "name", "value": "ab" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Health & Info",
+      "item": [
+        {
+          "name": "GET - Actuator Health Check",
+          "request": {
+            "method": "GET",
+            "auth": { "type": "noauth" },
+            "url": {
+              "raw": "{{base_url}}/actuator/health",
+              "host": ["{{base_url}}"],
+              "path": ["actuator", "health"]
+            }
+          }
+        },
+        {
+          "name": "GET - Application Version",
+          "request": {
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{admin_username}}" },
+                { "key": "password", "value": "{{admin_password}}" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/version",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "version"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
