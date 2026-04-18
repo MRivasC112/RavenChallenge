@@ -1,0 +1,22 @@
+# =============================================================================
+# Test Profile — Testcontainers MySQL (datasource overridden at runtime)
+# =============================================================================
+
+spring:
+  datasource:
+    # Overridden by @DynamicPropertySource in Testcontainers base test class
+    url: jdbc:mysql://localhost:3306/test_db
+    username: test
+    password: test
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+# Logging
+logging:
+  level:
+    root: INFO
+    com.example.employees: DEBUG

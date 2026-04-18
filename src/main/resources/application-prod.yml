@@ -1,0 +1,21 @@
+# =============================================================================
+# Production Profile — MySQL via environment variables
+# =============================================================================
+
+spring:
+  datasource:
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useSSL=true&serverTimezone=UTC
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+# Logging
+logging:
+  level:
+    root: WARN
+    com.example.employees: INFO
